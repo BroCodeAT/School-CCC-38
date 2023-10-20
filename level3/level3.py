@@ -38,6 +38,16 @@ class Piece:
         if self.rotated == 4:
             self.rotated = 0
 
+    def match(self, other: "Piece", side: str):
+        if side == "top":
+            return self.top == other.bottom
+        elif side == "right":
+            return self.right == other.left
+        elif side == "bottom":
+            return self.bottom == other.top
+        elif side == "left":
+            return self.left == other.right
+
 
 def main(data: list):
     data = [[Piece(piece) for piece in line.split(" ")] for line in data]
