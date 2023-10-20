@@ -24,8 +24,10 @@ class Piece:
         return f"{self.top},{self.right},{self.bottom},{self.left}"
 
     def __eq__(self, other: "Piece"):
-        if self.top == other.top and self.right == other.right and self.bottom == other.bottom and self.left == other.left:
-            return True
+        for i in range(4):
+            if self.top == other.top and self.right == other.right and self.bottom == other.bottom and self.left == other.left:
+                return True
+            self.rotate()
         return False
 
     def __init__(self, data: str):
