@@ -52,11 +52,17 @@ class Piece:
 def main(data: list):
     data = [[Piece(piece) for piece in line.split(" ")] for line in data]
 
+
     for ind_line, line in enumerate(data):
         for ind_piece, piece in enumerate(line):
-            data[ind_line][ind_piece+1]
+            if not piece.right == "E":
+                if not piece.match(data[ind_line][ind_piece+1], "right"):
+                    piece.right = "K" if piece.right == "H" else "H"
+            if not piece.bottom == "E":
+                if piece.match(data[ind_line+1][ind_piece], "bottom"):
+                    piece.bottom = "K" if piece.bottom == "H" else "H"
 
-    return 
+    return data
 
 
 if __name__ == '__main__':
