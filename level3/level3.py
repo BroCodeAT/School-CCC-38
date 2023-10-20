@@ -14,15 +14,15 @@ def write_to_file(pieces, counts, filename: str = "level2/level2_1.out") -> None
 
 @dataclass
 class Piece:
-    top: bool
-    right: bool
-    bottom: bool
-    left: bool
+    top: str
+    right: str
+    bottom: str
+    left: str
 
     rotated = 0
 
     def __str__(self):
-        return f"{'K' if self.top else 'H'},{'K' if self.right else 'H'},{'K' if self.bottom else 'H'},{'K' if self.left else 'H'}"
+        return f"{self.top},{self.right},{self.bottom},{self.left}"
 
     def __eq__(self, other: "Piece"):
         if self.top == other.top and self.right == other.right and self.bottom == other.bottom and self.left == other.left:
@@ -30,11 +30,7 @@ class Piece:
         return False
 
     def __init__(self, data: str):
-        data = data.split(",")
-        self.top = True if data[0] == "K" else False
-        self.right = True if data[1] == "K" else False
-        self.bottom = True if data[2] == "K" else False
-        self.left = True if data[3] == "K" else False
+        self.top, self.right, self.bottom, self.left = data.split(",")
 
     def rotate(self):
         self.top, self.right, self.bottom, self.left = self.left, self.top, self.right, self.bottom
