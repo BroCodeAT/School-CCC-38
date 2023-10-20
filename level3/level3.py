@@ -56,10 +56,10 @@ def main(data: list):
     for ind_line, line in enumerate(data):
         for ind_piece, piece in enumerate(line):
             if not piece.right == "E":
-                while not piece.match(data[ind_line][ind_piece+1], "right"):
+                if piece.right == data[ind_line][ind_piece+1].left:
                     piece.right = "K" if piece.right == "H" else "H"
             if not piece.bottom == "E":
-                while piece.match(data[ind_line+1][ind_piece], "bottom"):
+               if piece.bottom == data[ind_line+1][ind_piece].top:
                     piece.bottom = "K" if piece.bottom == "H" else "H"
 
     return data
