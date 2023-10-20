@@ -3,13 +3,13 @@ from dataclasses import dataclass
 
 def load_file(filename: str = "level2/level2_1.in") -> list:
     with open(filename, "r") as file:
-        return [line.strip() for line in file.readlines()]
+        return [line.strip() for line in file.readlines()][1:]
 
 
-def write_to_file(data: list, filename: str = "level2/level2_1.out") -> None:
+def write_to_file(pieces, counts, filename: str = "level2/level2_1.out") -> None:
     with open(filename, "w") as file:
-        for line in data:
-            file.write(line + "\n")
+        for piece, count in zip(pieces, counts):
+            file.write(str(count) + " " + str(piece) + "\n")
 
 
 @dataclass
@@ -20,6 +20,9 @@ class Piece:
     left: bool
 
     rotated = 0
+
+    def __str__(self):
+        return f"{'K' if self.top else 'H'},{'K' if self.right else 'H'},{'K' if self.bottom else 'H'},{'K' if self.left else 'H'}"
 
     def __eq__(self, other: "Piece"):
         if self.top == other.top and self.right == other.right and self.bottom == other.bottom and self.left == other.left:
@@ -40,14 +43,26 @@ class Piece:
             self.rotated = 0
 
 
-def main(data: list) -> list:
+def main(data: list):
     pieces = [Piece(piece) for piece in data]
+    single_pieces = []
+    counts = []
+    # Count if a piece is equal to another piece in any rotation and count them
     for piece in pieces:
-
-    return data
+        count = 0
+        for other in pieces:
+            for i in range(4):
+                if piece == other:
+                    count += 1
+                    pieces.remove(other)
+                    break
+                else:
+                    piece.rotate()
+        counts.append(count)
+    return count, pieces
 
 
 if __name__ == '__main__':
     for i in range(1, 6):
-        comp = main(load_file(f"level2/level2_{i}.in"))
-        write_to_file(comp, f"level2/level2_{i}.out")
+        count, pieces = main(load_file(f"level2/level2_example.in"))
+        write_to_file(count, pieces, f"level2/level2_example.out")
