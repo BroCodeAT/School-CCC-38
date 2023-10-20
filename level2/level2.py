@@ -19,6 +19,8 @@ class Piece:
     bottom: bool
     left: bool
 
+    rotated = 0
+
     def __eq__(self, other: "Piece"):
         if self.top == other.top and self.right == other.right and self.bottom == other.bottom and self.left == other.left:
             return True
@@ -31,9 +33,17 @@ class Piece:
         self.bottom = True if data[2] == "K" else False
         self.left = True if data[3] == "K" else False
 
+    def rotate(self):
+        self.top, self.right, self.bottom, self.left = self.left, self.top, self.right, self.bottom
+        self.rotated += 1
+        if self.rotated == 4:
+            self.rotated = 0
+
 
 def main(data: list) -> list:
     pieces = [Piece(piece) for piece in data]
+    for piece in pieces:
+
     return data
 
 
