@@ -41,22 +41,12 @@ class Piece:
 
 def main(data: list):
     data = [[Piece(piece) for piece in line.split(" ")] for line in data]
-    pieces = []
-    counts = []
-    for piece in data:
-        in_flag = False
-        for i in range(4):
-            if piece in pieces:
-                in_flag = True
-                counts[pieces.index(piece)] += 1
-                break
-            else:
-                piece.rotate()
-        if not in_flag:
-            pieces.append(piece)
-            counts.append(1)
-    # Count if a piece is equal to another piece in any rotation and count them
-    return counts, pieces
+
+    for ind_line, line in enumerate(data):
+        for ind_piece, piece in enumerate(line):
+            data[ind_line][ind_piece+1]
+
+    return 
 
 
 if __name__ == '__main__':
