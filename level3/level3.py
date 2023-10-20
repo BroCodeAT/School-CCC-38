@@ -40,7 +40,7 @@ class Piece:
 
 
 def main(data: list):
-    data = [Piece(piece) for piece in data]
+    data = [[Piece(piece) for piece in line.split(" ")] for line in data]
     pieces = []
     counts = []
     for piece in data:
@@ -60,9 +60,9 @@ def main(data: list):
 
 
 if __name__ == '__main__':
-    count, pieces = main(load_file(f"level2/level2_example.in"))
-    write_to_file(pieces, count, f"level2/level2_example.out")
+    count, pieces = main(load_file(f"level3/level3_example.in"))
+    write_to_file(pieces, count, f"level3/level3_example.out")
 
     for i in range(1, 6):
-        count, pieces = main(load_file(f"level2/level2_{i}.in"))
-        write_to_file(pieces, count, f"level2/level2_{i}.out")
+        count, pieces = main(load_file(f"level3/level3_{i}.in"))
+        write_to_file(pieces, count, f"level3/level3_{i}.out")
