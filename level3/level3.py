@@ -66,9 +66,9 @@ def main(data: list):
 
 
 if __name__ == '__main__':
-    count, pieces = main(load_file(f"level3/level3_example.in"))
-    write_to_file(pieces, count, f"level3/level3_example.out")
+    data = main(load_file(f"level3/level3_example.in"))
+    write_to_file(data, f"level3/level3_example.out")
 
     for i in range(1, 6):
-        count, pieces = main(load_file(f"level3/level3_{i}.in"))
-        write_to_file(pieces, count, f"level3/level3_{i}.out")
+        data = main(load_file(f"level3/level3_{i}.in"))
+        write_to_file(data, f"level3/level3_{i}.out")
