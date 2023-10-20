@@ -6,10 +6,9 @@ def load_file(filename: str = "level2/level2_1.in") -> list:
         return [line.strip() for line in file.readlines()][1:]
 
 
-def write_to_file(pieces, counts, filename: str = "level2/level2_1.out") -> None:
+def write_to_file(data, filename: str = "level2/level2_1.out") -> None:
     with open(filename, "w") as file:
-        for piece, count in zip(pieces, counts):
-            file.write(str(count) + " " + str(piece) + "\n")
+        file.write("\n".join([" ".join([str(piece) for piece in line]) for line in data]))
 
 
 @dataclass
@@ -40,26 +39,25 @@ class Piece:
 
     def match(self, other: "Piece", side: str):
         if side == "top":
-            return self.top == other.bottom
+
+            return self.top != other.bottom and self.top != "E" and other.bottom != "E"
         elif side == "right":
-            return self.right == other.left
+            return self.right != other.left and self.right != "E" and other.left != "E"
         elif side == "bottom":
-            return self.bottom == other.top
+            return self.bottom != other.top and self.bottom != "E" and other.top != "E"
         elif side == "left":
-            return self.left == other.right
+            return self.left != other.right and self.left != "E" and other.right != "E"
 
 
 def main(data: list):
     data = [[Piece(piece) for piece in line.split(" ")] for line in data]
-
-
     for ind_line, line in enumerate(data):
         for ind_piece, piece in enumerate(line):
             if not piece.right == "E":
-                if not piece.match(data[ind_line][ind_piece+1], "right"):
+                while not piece.match(data[ind_line][ind_piece+1], "right"):
                     piece.right = "K" if piece.right == "H" else "H"
             if not piece.bottom == "E":
-                if piece.match(data[ind_line+1][ind_piece], "bottom"):
+                while piece.match(data[ind_line+1][ind_piece], "bottom"):
                     piece.bottom = "K" if piece.bottom == "H" else "H"
 
     return data
@@ -67,6 +65,7 @@ def main(data: list):
 
 if __name__ == '__main__':
     data = main(load_file(f"level3/level3_example.in"))
+    print("\n".join([" ".join([str(piece) for piece in line]) for line in data]))
     write_to_file(data, f"level3/level3_example.out")
 
     for i in range(1, 6):
