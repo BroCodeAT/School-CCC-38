@@ -48,6 +48,9 @@ def main(data: list) -> list:
 
 
 if __name__ == '__main__':
+    comp = main(load_file(f"level2/level2_example.in"))
+    write_to_file(comp, f"level2/level2_example.out")
+
     for i in range(1, 6):
         comp = main(load_file(f"level2/level2_{i}.in"))
         write_to_file(comp, f"level2/level2_{i}.out")
