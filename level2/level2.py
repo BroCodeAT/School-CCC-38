@@ -44,28 +44,29 @@ class Piece:
 
 
 def main(data: list):
-    pieces = [Piece(piece) for piece in data]
-    single_pieces = []
+    data = [Piece(piece) for piece in data]
+    pieces = []
     counts = []
+    for piece in data:
+        in_flag = False
+        for i in range(4):
+            if piece in pieces:
+                in_flag = True
+                counts[pieces.index(piece)] += 1
+                break
+            else:
+                piece.rotate()
+        if not in_flag:
+            pieces.append(piece)
+            counts.append(1)
     # Count if a piece is equal to another piece in any rotation and count them
-    for piece in pieces:
-        count = 0
-        for other in pieces:
-            for i in range(4):
-                if piece == other:
-                    count += 1
-                    pieces.remove(other)
-                    break
-                else:
-                    piece.rotate()
-        counts.append(count)
-    return count, pieces
+    return counts, pieces
 
 
 if __name__ == '__main__':
-    comp = main(load_file(f"level2/level2_example.in"))
-    write_to_file(comp, f"level2/level2_example.out")
+    count, pieces = main(load_file(f"level2/level2_example.in"))
+    write_to_file(pieces, count, f"level2/level2_example.out")
 
     for i in range(1, 6):
-        count, pieces = main(load_file(f"level2/level2_example.in"))
-        write_to_file(count, pieces, f"level2/level2_example.out")
+        count, pieces = main(load_file(f"level2/level2_{i}.in"))
+        write_to_file(pieces, count, f"level2/level2_{i}.out")
